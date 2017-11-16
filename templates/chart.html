@@ -1,5 +1,43 @@
-<!DOCTYPE html><html lang="en"><head>   <meta charset="utf-8" />   <title>Chart.js </title>      <!-- import plugin script -->   <script src='../static/js/Chart.min.js'></script>   </head><body>
-<h1>Flask Chart.js</h1><!-- bar chart canvas element --><canvas id="chart" width="600" height="400"></canvas>
+<!DOCTYPE html>
+<html lang="en">
+<head>   
+<meta charset="utf-8" />   
+<title>View </title>      <!-- import plugin script -->   
+  <script src='../static/js/Chart.min.js'></script>   
+</head>
+<body>
+{% with messages = get_flashed_messages(with_categories = true) %}
+    {% if messages %}
+      <ul>
+          {% for message in messages %}
+          <li> {{ message[1]}} </li>
+          {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+<form action="" method="post">
+    {{ form.csrf}}
+    <div class = "input text">
+      {{ form.name.label }} {{form.name}}<br/>
+      {{ form.date_stock.label }} {{form.date_stock}}
+    </div>
+
+    <div class = "input submit">
+      <input type = "submit" value = "Search" />
+    </div>
+  </form>
+{% if val == 2 %}
+<h1> No results found! </h1>
+{% endif %}
+{% if val == 1%}
+<canvas id="chart" width="600" height="400"></canvas>  
+<div id ="details">
+  Tweets Details for {{cname}} on {{datestock}} <br/>
+  Number of Positive Tweets {{pos}} <br/>
+  Number of Negative Tweets {{neg}} <br/>
+  Number of Neutral Tweets {{neut}} <br/>
+
+</div>
 <script>
    var pieData = [
             {% for item,label,colors in set %}
@@ -19,7 +57,6 @@
    steps = 10
    max = 10
    // draw pie chart
-   new Chart(document.getElementById("chart").getContext("2d")).Pie(pieData);
- 
-</script>
+   new Chart(document.getElementById("chart").getContext("2d")).Pie(pieData);</script>
+{% endif %}
 </body></html>
